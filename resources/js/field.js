@@ -1,3 +1,5 @@
+import DefaultField from './components/DefaultField'
+
 Nova.booting((Vue, router, store) => {
     // Vue.component('index-nova-flexible-content', require('./components/IndexField'))
     Vue.component('detail-nova-flexible-content', require('./components/DetailField'))
@@ -11,4 +13,5 @@ Nova.booting((Vue, router, store) => {
     Vue.component('icon-arrow-up', require('./components/icons/ArrowUp'))
     Vue.component('icon-plus-square', require('./components/icons/PlusSquare'))
     Vue.component('icon-minus-square', require('./components/icons/MinusSquare'))
+    Vue.component('default-field', DefaultField)
 })

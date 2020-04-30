@@ -26,6 +26,15 @@ class FieldServiceProvider extends ServiceProvider
             Nova::script('nova-flexible-content', __DIR__.'/../dist/js/field.js');
             Nova::style('nova-flexible-content', __DIR__.'/../dist/css/field.css');
         });
+
+        // add macro for size for fields
+	    $this->app->booted(function () {
+		    Field::macro('size', function ($size = 'w-full') {
+			    return $this->withMeta(['size' => $size]);
+		    });
+	    });
+
+
     }
 
     /**

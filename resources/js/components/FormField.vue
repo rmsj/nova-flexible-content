@@ -1,5 +1,6 @@
 <template>
-    <component :is="field.fullWidth ? 'full-width-field' : 'default-field'" :field="field" :errors="errors" full-width-content>
+    <div ref="field-wrapper" :class="this.field.size">
+        <component :is="field.fullWidth ? 'full-width-field' : 'default-field'" :field="field" :errors="errors" full-width-content>
         <template slot="field">
 
             <div v-if="order.length > 0">
@@ -32,6 +33,7 @@
 
         </template>
     </component>
+    </div>
 </template>
 
 <script>
@@ -66,6 +68,12 @@ export default {
             files: {},
             limitCounter: this.field.limit
         };
+    },
+
+    mounted() {
+        if (this.hasSize) {
+            this.$parent.$parent.$el.classList.add('nova-grid-card-styles');
+        }
     },
 
     methods: {
@@ -217,7 +225,65 @@ export default {
             if (this.limitCounter >= 0) {
                 this.limitCounter++;
             }
-        }
+        },
+
+        hasSize() {
+            return this.field.size !== undefined;
+        },
+
+        fieldLabelClasses() {
+            return this.hasSize ? 'nova-grid-field-label' : 'w-1/5 py-6 px-8';
+        },
+
+        fieldWrapperClasses() {
+            return this.field.size !== undefined ? 'nova-grid-wrapper' : 'flex border-b border-40 w-full';
+        },
+
+        fieldClasses() {
+
+            if(this.hasSize) {
+                return 'w-full';
+            }
+
+            return this.fullWidthContent ? 'py-6 px-8 w-4/5' : 'py-6 px-8 w-1/2'
+        },
     }
 }
 </script>
+<style lang="scss">
+
+    .nova-grid-wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        width: 100%;
+        padding: 1rem;
+    }
+
+    .nova-grid-field-label {
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        width: 100%;
+    }
+
+    .nova-grid-card-styles {
+        display: flex; //ADDED
+        flex-wrap: wrap; //ADDED
+        width: 100%; //ADDED
+
+        > form {
+            display: flex;
+            flex-wrap: wrap;
+            width: 100%;
+
+            .bg-30.flex.px-8.py-4 {
+                width: 100%;
+                display: flex;
+                justify-content: flex-end;
+            }
+
+        }
+
+    }
+
+
+</style>
